@@ -1,29 +1,26 @@
-import React, { useState } from 'react'
-import todosContext from '../../Context/todos';
+import React, { useState, useContext } from 'react'
+import TodosContext from '../../Context/todos';
 
 function FormAddTodo(props) {
 
     const [text, setText] = useState('');
+    const todosContext = useContext(TodosContext);
 
-    let formHandler = (e, context) => {
+    let formHandler = e => {
         e.preventDefault();
-        context.add(text);
+        todosContext.add(text);
         setText("");
     }
 
     let inputHandler = e => setText(e.target.value)
 
     return (
-        <todosContext.Consumer>
-            {context => (
-                <form className="form-inline" onSubmit={(e) => formHandler(e, context)}>
-                    <div className="form-group">
-                        <input type="text" className="form-control mx-sm-3" placeholder="i want to do ..." value={text} onChange={inputHandler} />
-                        <button className="btn btn-primary" type='submit' >add</button>
-                    </div>
-                </form>
-            )}
-        </todosContext.Consumer>
+        <form className="form-inline" onSubmit={formHandler}>
+            <div className="form-group">
+                <input type="text" className="form-control mx-sm-3" placeholder="i want to do ..." value={text} onChange={inputHandler} />
+                <button className="btn btn-primary" type='submit' >add</button>
+            </div>
+        </form>
     )
 }
 

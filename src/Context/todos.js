@@ -1,6 +1,6 @@
 import React from "react";
 
-const todosContext = React.createContext({
+const TodosContext = React.createContext({
     todos: [],
     add: () => { },
     done: () => { },
@@ -11,4 +11,4 @@ const todosContext = React.createContext({
 
 
 
-export default todosContext
+export default TodosContext
