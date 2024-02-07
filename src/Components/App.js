@@ -4,11 +4,13 @@ import FormAddTodo from './Todo/FormAddTodo';
 import TodoList from './Todo/TodoList';
 import 'bootstrap/dist/css/bootstrap.css'
 
-import todosContext from '../Context/todos';
+import TodosContext from '../Context/todos';
+import AuthContext from '../Context/auth'
 
 class App extends Component {
     state = {
         todos: [],
+        authenticated: false
     }
 
     addTodo(text) {
@@ -69,33 +71,41 @@ class App extends Component {
 
 
         return (
-            <todosContext.Provider value={{
-                todos: this.state.todos,
-                add: this.addTodo.bind(this),
-                done: this.toggleTodo.bind(this),
-                delete: this.deleteTodo.bind(this),
-                edit: this.editTodo.bind(this),
+            <AuthContext.Provider value={{
+                authenticated: this.state.authenticated,
+                login: () => { this.setState({ authenticated: true }) },
+                logout: () => { this.setState({ authenticated: false }) },
             }}>
-                <div className="App">
-                    <Header />
-                    <main>
-                        <section className="jumbotron">
-                            <div className="container d-flex flex-column align-items-center">
-                                <h1 className="jumbotron-heading">Welcome!</h1>
-                                <p className="lead text-muted">To get started, add some items to your list:</p>
-                                <FormAddTodo />
-                            </div>
-                        </section>
-                        <div className="todosList">
-                            <div className="container">
-                                <div className="d-flex flex-column align-items-center ">
-                                    <TodoList />
+
+
+                <TodosContext.Provider value={{
+                    todos: this.state.todos,
+                    add: this.addTodo.bind(this),
+                    done: this.toggleTodo.bind(this),
+                    delete: this.deleteTodo.bind(this),
+                    edit: this.editTodo.bind(this),
+                }}>
+                    <div className="App">
+                        <Header />
+                        <main>
+                            <section className="jumbotron">
+                                <div className="container d-flex flex-column align-items-center">
+                                    <h1 className="jumbotron-heading">Welcome!</h1>
+                                    <p className="lead text-muted">To get started, add some items to your list:</p>
+                                    <FormAddTodo />
+                                </div>
+                            </section>
+                            <div className="todosList">
+                                <div className="container">
+                                    <div className="d-flex flex-column align-items-center ">
+                                        <TodoList />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </main>
-                </div>
-            </todosContext.Provider>
+                        </main>
+                    </div>
+                </TodosContext.Provider>
+            </AuthContext.Provider>
         )
     }
 }
