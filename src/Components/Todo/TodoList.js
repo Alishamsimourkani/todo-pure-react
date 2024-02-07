@@ -30,7 +30,6 @@ function TodoList(props) {
                 </>
             )}
         </todosContext.Consumer>
-
     )
 }
 
