@@ -9,8 +9,11 @@ export default function Todo(props) {
     const todosContext = useContext(TodosContext);
 
     let editHandler = text => {
-        todosContext.edit(item.key, text);
+        todosContext.dispatch({ type: 'edit_todo', payload: { key: item.key, text } });
         setEdit(false)
+    }
+    let deleteHandler = e => {
+        todosContext.dispatch({ type: 'delete_todo', payload: { key: item.key } })
     }
     return (
         <>
@@ -23,9 +26,9 @@ export default function Todo(props) {
                                     {item.text}
                                 </div>
                                 <div>
-                                    <button type="button" className={`btn btn-sm m-1 ${item.done ? 'btn-outline-primary' : 'btn-success'}`} onClick={() => todosContext.done(item.key)}>{item.done ? "Undone" : "Done"}</button>
+                                    <button type="button" className={`btn btn-sm m-1 ${item.done ? 'btn-outline-primary' : 'btn-success'}`} onClick={() => todosContext.dispatch({ type: 'toggle_todo', payload: { key: item.key } })}>{item.done ? "Undone" : "Done"}</button>
                                     <button type="button" className="btn btn-info btn-sm m-1" onClick={() => setEdit(true)}>edit</button>
-                                    <button type="button" className="btn btn-danger btn-sm m-1" onClick={() => todosContext.delete(item.key)}>delete</button>
+                                    <button type="button" className="btn btn-danger btn-sm m-1" onClick={deleteHandler}>delete</button>
                                 </div>
                             </div>
                         </div>
