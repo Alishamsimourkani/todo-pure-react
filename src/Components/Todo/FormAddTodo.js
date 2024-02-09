@@ -1,29 +1,8 @@
-import React, { useState, useContext } from 'react'
+import React from 'react'
 import TodosContext from '../../Context/todos';
 import AuthContext from '../../Context/auth';
+import axios from 'axios'
 
-// function FormAddTodo(props) {
-
-//     const [text, setText] = useState('');
-//     const todosContext = useContext(TodosContext);
-
-//     let formHandler = e => {
-//         e.preventDefault();
-//         todosContext.add(text);
-//         setText("");
-//     }
-
-//     let inputHandler = e => setText(e.target.value)
-
-//     return (
-//         <form className="form-inline" onSubmit={formHandler}>
-//             <div className="form-group">
-//                 <input type="text" className="form-control mx-sm-3" placeholder="i want to do ..." value={text} onChange={inputHandler} />
-//                 <button className="btn btn-primary" type='submit' >add</button>
-//             </div>
-//         </form>
-//     )
-// }
 
 class FormAddTodo extends React.Component {
 
@@ -31,8 +10,12 @@ class FormAddTodo extends React.Component {
     static contextType = TodosContext;
     formHandler(e) {
         e.preventDefault();
-        // this.context.add(this.state.text)
-        this.context.dispatch({ type: 'add_todo', payload: { text: this.state.text } })
+        // ajax
+        let todo = { text: this.state.text, done: false };
+        axios.post(`https://react-course-dbeae-default-rtdb.europe-west1.firebasedatabase.app/todos.json`, todo)
+            .then(response => this.context.dispatch({ type: 'add_todo', payload: { todo: { ...todo, key: response.data.name } } }))
+            .catch(err => console.log(err))
+
         this.setState({ text: '' });
     }
 
