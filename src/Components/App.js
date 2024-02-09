@@ -36,7 +36,7 @@ function App() {
 
     useEffect(() => {
         axios.get(`https://react-course-dbeae-default-rtdb.europe-west1.firebasedatabase.app/todos.json`)
-            .then(response => console.log(jsonHandler(response.data)))
+            .then(response => jsonHandler(response.data))
             .catch(err => console.log(err))
     }, [])
 
