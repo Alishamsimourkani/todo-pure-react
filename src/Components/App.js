@@ -3,7 +3,7 @@ import Header from './Layouts/Header';
 import FormAddTodo from './Todo/FormAddTodo';
 import TodoList from './Todo/TodoList';
 import 'bootstrap/dist/css/bootstrap.css'
-import axios from 'axios';
+import todoApi from './../Api/todos'
 
 
 // import Context
@@ -35,7 +35,7 @@ function App() {
     }
 
     useEffect(() => {
-        axios.get(`https://react-course-dbeae-default-rtdb.europe-west1.firebasedatabase.app/todos.json`)
+        todoApi.get(`/todos.json`)
             .then(response => jsonHandler(response.data))
             .catch(err => console.log(err))
     }, [])

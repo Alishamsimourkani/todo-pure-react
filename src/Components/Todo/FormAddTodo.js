@@ -1,8 +1,7 @@
 import React from 'react'
 import TodosContext from '../../Context/todos';
 import AuthContext from '../../Context/auth';
-import axios from 'axios'
-
+import todoApi from '../../Api/todos'
 
 class FormAddTodo extends React.Component {
 
@@ -11,12 +10,14 @@ class FormAddTodo extends React.Component {
     formHandler(e) {
         e.preventDefault();
         // ajax
-        let todo = { text: this.state.text, done: false };
-        axios.post(`https://react-course-dbeae-default-rtdb.europe-west1.firebasedatabase.app/todos.json`, todo)
-            .then(response => this.context.dispatch({ type: 'add_todo', payload: { todo: { ...todo, key: response.data.name } } }))
-            .catch(err => console.log(err))
+        if (this.state.text.length > 1) {
+            let todo = { text: this.state.text, done: false };
+            todoApi.post(`/todos.json`, todo)
+                .then(response => this.context.dispatch({ type: 'add_todo', payload: { todo: { ...todo, key: response.data.name } } }))
+                .catch(err => console.log(err))
 
-        this.setState({ text: '' });
+            this.setState({ text: '' });
+        }
     }
 
     inputHandler(e) {

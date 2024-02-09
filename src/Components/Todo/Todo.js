@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import EditTodo from './EditTodo';
 import TodosContext from '../../Context/todos';
-import axios from 'axios';
+import todoApi from '../../Api/todos'
 
 export default function Todo(props) {
 
@@ -9,7 +9,7 @@ export default function Todo(props) {
     const [edit, setEdit] = useState(false);
     const todosContext = useContext(TodosContext);
     let doneHandler = e => {
-        axios.patch(`https://react-course-dbeae-default-rtdb.europe-west1.firebasedatabase.app/todos/${item.key}.json`, { done: !item.done })
+        todoApi.patch(`/todos/${item.key}.json`, { done: !item.done })
             .then(response => {
                 todosContext.dispatch({ type: 'toggle_todo', payload: { key: item.key } })
             })
@@ -17,7 +17,7 @@ export default function Todo(props) {
     }
 
     let editHandler = text => {
-        axios.patch(`https://react-course-dbeae-default-rtdb.europe-west1.firebasedatabase.app/todos/${item.key}.json`, { text })
+        todoApi.patch(`/todos/${item.key}.json`, { text })
             .then(response => {
                 todosContext.dispatch({ type: 'edit_todo', payload: { key: item.key, text } });
             })
@@ -26,7 +26,7 @@ export default function Todo(props) {
     }
     let deleteHandler = e => {
         // ajax
-        axios.delete(`https://react-course-dbeae-default-rtdb.europe-west1.firebasedatabase.app/todos/${item.key}.json`)
+        todoApi.delete(`/todos/${item.key}.json`)
             .then(response => {
                 todosContext.dispatch({ type: 'delete_todo', payload: { key: item.key } })
             })
