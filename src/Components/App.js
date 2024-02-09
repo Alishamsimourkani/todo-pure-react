@@ -1,8 +1,10 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import Header from './Layouts/Header';
 import FormAddTodo from './Todo/FormAddTodo';
 import TodoList from './Todo/TodoList';
 import 'bootstrap/dist/css/bootstrap.css'
+import axios from 'axios';
+
 
 // import Context
 import TodosContext from '../Context/todos';
@@ -19,7 +21,24 @@ function App() {
         todos: [],
         authenticated: false
     })
+    let jsonHandler = (data) => {
+        let todos = Object
+            .entries(data)
+            .map(([key, value]) => {
+                return {
+                    ...value,
+                    key
+                }
+            })
 
+        dispatch({ type: 'init_todo', payload: { todos } })
+    }
+
+    useEffect(() => {
+        axios.get(`https://react-course-dbeae-default-rtdb.europe-west1.firebasedatabase.app/todos.json`)
+            .then(response => console.log(jsonHandler(response.data)))
+            .catch(err => console.log(err))
+    }, [])
 
     return (
         <AuthContext.Provider value={{
