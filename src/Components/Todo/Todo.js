@@ -8,6 +8,13 @@ export default function Todo(props) {
     const { item } = props;
     const [edit, setEdit] = useState(false);
     const todosContext = useContext(TodosContext);
+    let doneHandler = e => {
+        axios.patch(`https://react-course-dbeae-default-rtdb.europe-west1.firebasedatabase.app/todos/${item.key}.json`, { done: !item.done })
+            .then(response => {
+                todosContext.dispatch({ type: 'toggle_todo', payload: { key: item.key } })
+            })
+            .catch(err => console.log(err))
+    }
 
     let editHandler = text => {
         axios.patch(`https://react-course-dbeae-default-rtdb.europe-west1.firebasedatabase.app/todos/${item.key}.json`, { text })
@@ -36,7 +43,7 @@ export default function Todo(props) {
                                     {item.text}
                                 </div>
                                 <div>
-                                    <button type="button" className={`btn btn-sm m-1 ${item.done ? 'btn-outline-primary' : 'btn-success'}`} onClick={() => todosContext.dispatch({ type: 'toggle_todo', payload: { key: item.key } })}>{item.done ? "Undone" : "Done"}</button>
+                                    <button type="button" className={`btn btn-sm m-1 ${item.done ? 'btn-outline-primary' : 'btn-success'}`} onClick={doneHandler}>{item.done ? "Undone" : "Done"}</button>
                                     <button type="button" className="btn btn-info btn-sm m-1" onClick={() => setEdit(true)}>edit</button>
                                     <button type="button" className="btn btn-danger btn-sm m-1" onClick={deleteHandler}>delete</button>
                                 </div>
