@@ -1,19 +1,18 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer } from 'react';
 import Header from './Layouts/Header';
-import FormAddTodo from './Todo/FormAddTodo';
-import TodoList from './Todo/TodoList';
-import 'bootstrap/dist/css/bootstrap.css'
-import todoApi from './../Api/todos'
 
+// import style
+import 'bootstrap/dist/css/bootstrap.css'
 
 // import Context
 import TodosContext from '../Context/todos';
 import AuthContext from '../Context/auth'
 
-
 // import Reducers
 import AppReducer from '../Reducers/appReducer'
 
+// import Rotes
+import Home from './../Routes/Home'
 
 function App() {
 
@@ -21,24 +20,7 @@ function App() {
         todos: [],
         authenticated: false
     })
-    let jsonHandler = (data) => {
-        let todos = Object
-            .entries(data)
-            .map(([key, value]) => {
-                return {
-                    ...value,
-                    key
-                }
-            })
 
-        dispatch({ type: 'init_todo', payload: { todos } })
-    }
-
-    useEffect(() => {
-        todoApi.get(`/todos.json`)
-            .then(response => jsonHandler(response.data))
-            .catch(err => console.log(err))
-    }, [])
 
     return (
         <AuthContext.Provider value={{
@@ -52,22 +34,7 @@ function App() {
             }}>
                 <div className="App">
                     <Header />
-                    <main>
-                        <section className="jumbotron">
-                            <div className="container d-flex flex-column align-items-center">
-                                <h1 className="jumbotron-heading">Welcome!</h1>
-                                <p className="lead text-muted">To get started, add some items to your list:</p>
-                                <FormAddTodo />
-                            </div>
-                        </section>
-                        <div className="todosList">
-                            <div className="container">
-                                <div className="d-flex flex-column align-items-center ">
-                                    <TodoList />
-                                </div>
-                            </div>
-                        </div>
-                    </main>
+                    <Home />
                 </div>
             </TodosContext.Provider>
         </AuthContext.Provider>

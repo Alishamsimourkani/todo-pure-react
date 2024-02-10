@@ -53,26 +53,6 @@ let deleteTodo = (state, action) => {
     }
 }
 
-
-// let toggleTodo = (state, action) => {
-//     let { key } = action.payload;
-
-//     let item = state.todos.find(item => item.key === key)
-//     console.log(item.done);
-//     item.done = !item.done;
-//     console.log(item.done);
-
-//     let newTodos = state.todos.filter(item => item.key !== key)
-//     // console.log(newTodos);
-//     return {
-//         ...state,
-//         todos: [
-//             ...newTodos,
-//             item
-//         ]
-//     }
-// }
-
 let toggleTodo = (state, action) => {
     let { key } = action.payload;
 
