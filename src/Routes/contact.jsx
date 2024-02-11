@@ -1,5 +1,5 @@
 import { Form } from "react-router-dom";
-
+import Header from './../Components/Layouts/Header';
 export default function Contact() {
     const contact = {
         first: "Your",
@@ -11,57 +11,64 @@ export default function Contact() {
     };
 
     return (
-        <div id="contact">
-            <div>
-                <img
-                    key={contact.avatar}
-                    src={contact.avatar || null}
-                />
-            </div>
+        <>
+            <Header />
+            <section className="jumbotron">
+                <div className="container d-flex flex-column align-items-center">
+                    <div id="contact">
+                        <div>
+                            <img
+                                key={contact.avatar}
+                                src={contact.avatar || null}
+                            />
+                        </div>
 
-            <div>
-                <h1>
-                    {contact.first || contact.last ? (
-                        <>
-                            {contact.first} {contact.last}
-                        </>
-                    ) : (
-                        <i>No Name</i>
-                    )}{" "}
-                    <Favorite contact={contact} />
-                </h1>
+                        <div>
+                            <h1>
+                                {contact.first || contact.last ? (
+                                    <>
+                                        {contact.first} {contact.last}
+                                    </>
+                                ) : (
+                                    <i>No Name</i>
+                                )}{" "}
+                                <Favorite contact={contact} />
+                            </h1>
 
-                {contact.twitter && (
-                    <p>
-                        <a
-                            target="_blank"
-                            href={`https://twitter.com/${contact.twitter}`}
-                        >
-                            {contact.twitter}
-                        </a>
-                    </p>
-                )}
+                            {contact.twitter && (
+                                <p>
+                                    <a
+                                        target="_blank"
+                                        href={`https://twitter.com/${contact.twitter}`}
+                                    >
+                                        {contact.twitter}
+                                    </a>
+                                </p>
+                            )}
 
-                {contact.notes && <p>{contact.notes}</p>}
+                            {contact.notes && <p>{contact.notes}</p>}
 
-                <div>
-                    <Form action="edit">
-                        <button type="submit">Edit</button>
-                    </Form>
-                    <Form
-                        method="post"
-                        action="destroy"
-                        onSubmit={(event) => {
+                            <div>
+                                <Form action="edit">
+                                    <button type="submit">Edit</button>
+                                </Form>
+                                <Form
+                                    method="post"
+                                    action="destroy"
+                                    onSubmit={(event) => {
 
-                            event.preventDefault();
+                                        event.preventDefault();
 
-                        }}
-                    >
-                        <button type="submit">Delete</button>
-                    </Form>
+                                    }}
+                                >
+                                    <button type="submit">Delete</button>
+                                </Form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </section>
+        </>
     );
 }
 

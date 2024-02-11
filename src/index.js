@@ -9,7 +9,8 @@ import reportWebVitals from './reportWebVitals';
 
 // error handler route
 import ErrorPage from "./error-page";
-import Contact from "./Routes/contact";
+import Contact from "./Routes/Contact";
+import About from "./Routes/About";
 
 const router = createBrowserRouter([
   {
@@ -18,8 +19,12 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "contacts/:contactId",
+    path: "contact-us/:contactId",
     element: <Contact />,
+  },
+  {
+    path: "about-us/",
+    element: <About />,
   },
 ]);
 
