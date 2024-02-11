@@ -12,7 +12,12 @@ import AuthContext from '../Context/auth'
 import AppReducer from '../Reducers/appReducer'
 
 // import Rotes
+import { Routes, Route } from "react-router-dom";
 import Home from './../Routes/Home'
+import Contact from "./../Routes/Contact";
+import About from "./../Routes/About";
+import ErrorPage from "./../error-page";
+import SingleTodo from '../Routes/Todos/Single';
 
 function App() {
 
@@ -33,8 +38,14 @@ function App() {
                 dispatch
             }}>
                 <div className="App">
-                    <Header />
-                    <Home />
+                    <Routes>
+                        <Route path="/" element={<Header />}>
+                            <Route index element={<Home />} />
+                            <Route path="contact-us" element={<Contact />} />
+                            <Route path="about-us" element={<About />} />
+                            <Route path="todos/:id" element={<SingleTodo />} />
+                        </Route>
+                    </Routes>
                 </div>
             </TodosContext.Provider>
         </AuthContext.Provider>

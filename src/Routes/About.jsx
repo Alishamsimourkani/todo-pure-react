@@ -1,8 +1,8 @@
-import Header from './../Components/Layouts/Header';
+
 export default function About() {
     return (
         <>
-            <Header />
+            {/* <Header /> */}
             <section className="jumbotron">
                 <div className="container d-flex flex-column align-items-center">
                     <h1 className="jumbotron-heading">About Us</h1>

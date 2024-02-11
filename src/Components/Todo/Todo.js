@@ -1,13 +1,15 @@
 import React, { useState, useContext } from 'react';
 import EditTodo from './EditTodo';
 import TodosContext from '../../Context/todos';
-import todoApi from '../../Api/todos'
+import todoApi from '../../Api/todos';
+import { Link } from 'react-router-dom'
 
 export default function Todo(props) {
 
     const { item } = props;
     const [edit, setEdit] = useState(false);
     const todosContext = useContext(TodosContext);
+
     let doneHandler = e => {
         todoApi.patch(`/todos/${item.key}.json`, { done: !item.done })
             .then(response => {
@@ -39,9 +41,10 @@ export default function Todo(props) {
                     ? (
                         <div className="col-6 mb-2">
                             <div className="d-flex justify-content-between align-items-center border rounded p-3">
-                                <div>
+
+                                <Link to={`/todos/${item.key}`}>
                                     {item.text}
-                                </div>
+                                </Link>
                                 <div>
                                     <button type="button" className={`btn btn-sm m-1 ${item.done ? 'btn-outline-primary' : 'btn-success'}`} onClick={doneHandler}>{item.done ? "Undone" : "Done"}</button>
                                     <button type="button" className="btn btn-info btn-sm m-1" onClick={() => setEdit(true)}>edit</button>
